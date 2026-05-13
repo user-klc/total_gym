@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <title>Total Gym 1000 — Workout Tracker</title>
 <style>
 :root {
@@ -15,9 +15,11 @@
   --tag-bg:#dbeeff; --tag-text:#0f4f80;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;min-height:100vh;}
+html,body{height:100%;overflow:hidden;font-family:'Segoe UI',system-ui,sans-serif;color:var(--text);line-height:1.5;}
+body{display:flex;flex-direction:column;background:var(--bg);}
 
-header{background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;padding:18px 20px 14px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.18);}
+.top-bar{flex-shrink:0;background:linear-gradient(135deg,var(--blue-dark),var(--blue));box-shadow:0 2px 12px rgba(0,0,0,.18);z-index:100;}
+header{color:#fff;padding:18px 20px 14px;}
 .hdr{max-width:700px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;}
 .hdr-title{font-size:1.1rem;font-weight:800;}
 .hdr-title span{color:var(--accent);}
@@ -30,6 +32,7 @@ header{background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#ff
 .prog-track{height:6px;background:rgba(255,255,255,.18);border-radius:10px;overflow:hidden;}
 .prog-fill{height:100%;background:var(--accent);border-radius:10px;transition:width .4s ease;width:0%;}
 
+.scroll-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 main{max-width:700px;margin:0 auto;padding:18px 14px 100px;}
 
 .week-bar{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:11px 15px;margin-bottom:14px;}
@@ -118,7 +121,7 @@ main{max-width:700px;margin:0 auto;padding:18px 14px 100px;}
 .info-item{display:flex;align-items:flex-start;gap:8px;font-size:.84rem;color:var(--muted);margin-top:9px;line-height:1.5;}
 .info-item::before{content:'→';color:var(--blue);font-weight:700;flex-shrink:0;}
 
-.sticky-btm{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);padding:11px 14px;z-index:90;box-shadow:0 -4px 16px rgba(0,0,0,.06);}
+.sticky-btm{position:sticky;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);padding:11px 14px;z-index:90;box-shadow:0 -4px 16px rgba(0,0,0,.06);}
 .sticky-inner{max-width:700px;margin:0 auto;display:flex;gap:9px;}
 .btn-log-view{background:var(--blue-light);color:var(--blue-dark);border:1.5px solid var(--blue-mid);flex:0 0 auto;}
 
@@ -159,29 +162,32 @@ main{max-width:700px;margin:0 auto;padding:18px 14px 100px;}
 </head>
 <body>
 
-<header>
-  <div class="hdr">
-    <div>
-      <div class="hdr-title">Total Gym<span>&#174;</span> 1000</div>
-      <div class="hdr-sub" id="session-date"></div>
+<div class="top-bar" id="top-bar">
+  <header>
+    <div class="hdr">
+      <div>
+        <div class="hdr-title">Total Gym<span>&#174;</span> 1000</div>
+        <div class="hdr-sub" id="session-date"></div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="sbadge" onclick="openHist()">&#128218; History</button>
+        <div class="sbadge" id="session-label">Beginner &#xb7; Wk 1</div>
+      </div>
     </div>
-    <div style="display:flex;gap:8px;align-items:center">
-      <button class="sbadge" onclick="openHist()">&#128218; History</button>
-      <div class="sbadge" id="session-label">Beginner &#xb7; Wk 1</div>
-    </div>
-  </div>
-</header>
+  </header>
 
-<div class="prog-wrap">
-  <div class="prog-inner">
-    <div class="prog-lbl">
-      <span id="prog-text">0 of 9 exercises done</span>
-      <span id="prog-pct">0%</span>
+  <div class="prog-wrap">
+    <div class="prog-inner">
+      <div class="prog-lbl">
+        <span id="prog-text">0 of 9 exercises done</span>
+        <span id="prog-pct">0%</span>
+      </div>
+      <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
     </div>
-    <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
   </div>
 </div>
 
+<div class="scroll-body">
 <main>
   <div class="week-bar">
     <label for="week-sel">Programme Week:</label>
@@ -244,6 +250,8 @@ main{max-width:700px;margin:0 auto;padding:18px 14px 100px;}
     <button class="btn btn-primary" id="next-btn" onclick="goToNext()" style="flex:1">&#9654; Start First Exercise</button>
   </div>
 </div>
+
+</div><!-- end scroll-body -->
 
 <!-- LOG PANEL -->
 <div id="log-panel" onclick="closeLogOut(event)">
