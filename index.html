@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Total Gym 1000 — Beginner Strength Programme</title>
+  <style>
+    :root {
+      --blue: #1a6fa8; --blue-dark: #124e78; --blue-light: #e8f3fb;
+      --blue-mid: #cce4f5; --accent: #f0a500; --text: #1c2b3a;
+      --muted: #5a7285; --white: #ffffff; --bg: #f4f8fc;
+      --card: #ffffff; --border: #d0e4f0; --green: #2a7a4b;
+      --green-light: #e6f5ee; --tag-bg: #dbeeff; --tag-text: #0f4f80;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    header { background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 100%); color: white; padding: 48px 24px 40px; text-align: center; }
+    header .logo { font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; opacity: 0.7; margin-bottom: 10px; }
+    header h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 8px; }
+    header h1 span { color: var(--accent); }
+    header p { font-size: 1rem; opacity: 0.85; max-width: 500px; margin: 0 auto; }
+    .overview-bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; padding: 20px 24px; background: var(--blue-dark); border-top: 1px solid rgba(255,255,255,0.12); }
+    .pill { background: rgba(255,255,255,0.12); color: white; border-radius: 30px; padding: 6px 16px; font-size: 0.82rem; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+    main { max-width: 1000px; margin: 0 auto; padding: 40px 20px 60px; }
+    .section-title { display: flex; align-items: center; gap: 12px; margin: 40px 0 20px; }
+    .section-title .badge { background: var(--blue); color: white; border-radius: 8px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+    .section-title h2 { font-size: 1.3rem; font-weight: 700; color: var(--blue-dark); }
+    .section-title p { font-size: 0.85rem; color: var(--muted); }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .structure-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 20px; }
+    .structure-item { background: var(--blue-light); border: 1px solid var(--blue-mid); border-radius: 12px; padding: 16px; text-align: center; }
+    .structure-item .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue); font-weight: 700; margin-bottom: 4px; }
+    .structure-item .value { font-size: 1.1rem; font-weight: 800; color: var(--blue-dark); }
+    .activity-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .activity-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.92rem; }
+    .activity-list li::before { content: '→'; color: var(--blue); font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+    .exercise-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .exercise-table thead tr { background: var(--blue-dark); color: white; }
+    .exercise-table thead th { padding: 12px 14px; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
+    .exercise-table tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+    .exercise-table tbody tr:hover { background: var(--blue-light); }
+    .exercise-table td { padding: 14px; vertical-align: top; }
+    .exercise-table td:first-child { font-weight: 700; color: var(--blue-dark); width: 28px; }
+    .ex-name { font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .ex-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.45; }
+    .muscle-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .tag { background: var(--tag-bg); color: var(--tag-text); border-radius: 20px; padding: 3px 10px; font-size: 0.73rem; font-weight: 600; white-space: nowrap; }
+    .tag.primary { background: var(--blue); color: white; }
+    .stat { display: inline-block; background: var(--blue-light); color: var(--blue-dark); border-radius: 6px; padding: 2px 8px; font-size: 0.82rem; font-weight: 700; }
+    .cable-badge { display: inline-block; font-size: 0.7rem; padding: 2px 7px; border-radius: 4px; font-weight: 700; margin: 2px 0; vertical-align: middle; }
+    .cable-on { background: #fff3cd; color: #7a5000; border: 1px solid #f0c040; }
+    .cable-off { background: #f0f0f0; color: #555; border: 1px solid #ccc; }
+    .wing-badge { background: #e8f5e9; color: #2a6b3c; border: 1px solid #a5d6a7; }
+    .tempo-box { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 14px; }
+    .tempo-side { flex: 1; min-width: 160px; background: var(--blue-light); border: 1px solid var(--blue-mid); border-radius: 10px; padding: 14px; text-align: center; }
+    .tempo-side .num { font-size: 2.4rem; font-weight: 900; color: var(--blue-dark); line-height: 1; }
+    .tempo-side .label { font-size: 0.78rem; color: var(--muted); margin-top: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+    .tempo-side .sub { font-size: 0.82rem; color: var(--blue); font-weight: 600; margin-top: 2px; }
+    .prog-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    .prog-table th { background: var(--blue); color: white; padding: 10px 14px; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.07em; }
+    .prog-table td { padding: 11px 14px; border-bottom: 1px solid var(--border); }
+    .prog-table tr:last-child td { border-bottom: none; }
+    .prog-table tr:nth-child(even) td { background: var(--blue-light); }
+    .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .tip-card { background: var(--green-light); border: 1px solid #b2dfcb; border-left: 4px solid var(--green); border-radius: 10px; padding: 16px; font-size: 0.87rem; line-height: 1.5; }
+    .tip-card strong { display: block; color: var(--green); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 5px; }
+    footer { text-align: center; padding: 30px 20px; font-size: 0.8rem; color: var(--muted); border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Exercise Programme</div>
+  <h1>Total Gym<span>®</span> 1000</h1>
+  <p>Beginner Full-Body Strength Programme — 3 Days Per Week</p>
+</header>
+
+<div class="overview-bar">
+  <div class="pill">📅 3 Days / Week</div>
+  <div class="pill">⏱ ~60 Min / Session</div>
+  <div class="pill">🎯 Full-Body Strength</div>
+  <div class="pill">📈 Beginner Level</div>
+  <div class="pill">🔄 2 Circuits</div>
+  <div class="pill">⚖️ Start Level 2–3</div>
+</div>
+
+<main>
+
+  <div class="section-title">
+    <div class="badge">📋</div>
+    <div><h2>Session Structure</h2><p>How each 60-minute session is organised</p></div>
+  </div>
+  <div class="structure-grid">
+    <div class="structure-item"><div class="label">Warm-Up</div><div class="value">5–10 min</div></div>
+    <div class="structure-item"><div class="label">Circuit 1</div><div class="value">~20 min</div></div>
+    <div class="structure-item"><div class="label">Rest Between Circuits</div><div class="value">90 sec</div></div>
+    <div class="structure-item"><div class="label">Circuit 2</div><div class="value">~20 min</div></div>
+    <div class="structure-item"><div class="label">Cool-Down</div><div class="value">10 min</div></div>
+  </div>
+  <div class="card">
+    <p style="font-size:0.9rem;color:var(--muted)">Complete <strong>all 9 exercises in order</strong> (Circuit 1), rest 90 seconds, then repeat for Circuit 2. In <strong>weeks 1–2</strong>, aim for 1 circuit only. Build to 2 circuits from week 3 onwards. Suggested days: <strong>Monday / Wednesday / Friday</strong>.</p>
+  </div>
+
+  <div class="section-title">
+    <div class="badge">⏱</div>
+    <div><h2>Tempo — Speed of Movement</h2><p>All exercises in this programme use a 2/3 tempo</p></div>
+  </div>
+  <div class="card">
+    <p style="font-size:0.9rem;color:var(--muted);margin-bottom:14px">Controlling speed — especially on the way <em>down</em> — is key. The time a muscle is under tension drives strength adaptation.</p>
+    <div class="tempo-box">
+      <div class="tempo-side"><div class="num">2</div><div class="label">Seconds Up</div><div class="sub">Concentric (effort phase)</div></div>
+      <div class="tempo-side"><div class="num">3</div><div class="label">Seconds Down</div><div class="sub">Eccentric (return phase)</div></div>
+    </div>
+  </div>
+
+  <div class="section-title">
+    <div class="badge">🔥</div>
+    <div><h2>Warm-Up</h2><p>5–10 minutes — off the machine</p></div>
+  </div>
+  <div class="card">
+    <ul class="activity-list">
+      <li><strong>Arm circles</strong> — 1 minute forward, 1 minute backward. Loosens shoulders and upper back.</li>
+      <li><strong>Bodyweight squats</strong> — 15 slow reps. Warms up hips, knees and quads.</li>
+      <li><strong>Hip circles</strong> — 10 each direction. Mobilises the hip joints.</li>
+      <li><strong>Gentle torso twists</strong> — 20 reps. Prepares the spine and obliques.</li>
+    </ul>
+  </div>
+
+  <div class="section-title">
+    <div class="badge">💪</div>
+    <div><h2>Main Workout — Full-Body Circuit</h2><p>9 exercises · 2 sets each · 60 sec rest between exercises · 2/3 tempo</p></div>
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden">
+    <div style="overflow-x:auto">
+      <table class="exercise-table">
+        <thead>
+          <tr>
+            <th>#</th><th>Exercise</th><th>Setup</th><th>Sets / Reps</th><th>Muscles Targeted</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td><div class="ex-name">Leg Pull</div><div class="ex-desc">Secure feet under top bar of wing. Lie on back, legs straight, buttocks near top of board. Pull glideboard toward heels. Lift head and shoulders for added abdominal work.</div></td>
+            <td><span class="cable-badge cable-off">Cable OFF</span><br><span class="cable-badge wing-badge">Wing ON</span></td>
+            <td><span class="stat">2 × 15–20</span><br><small style="color:var(--muted)">Tempo 2/3 · Rest 60s</small></td>
+            <td><div class="muscle-tags"><span class="tag primary">Hamstrings</span><span class="tag primary">Glutes</span><span class="tag">Calves</span><span class="tag">Lower Abs</span><span class="tag">Upper Abs</span><span class="tag">Hips</span><span class="tag">Thighs</span></div></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><div class="ex-name">Squat</div><div class="ex-desc">Lie back on board, feet flat on wing, knees bent to 90°. Push until legs are fully straight, lower with control. Feet slightly spaced apart.</div></td>
+            <td><span class="cable-badge cable-off">Cable OFF</span><br><span class="cable-badge wing-badge">Wing ON</span></td>
+            <td><span class="stat">2 × 15–20</span><br><small style="color:var(--muted)">Tempo 2/3 · Rest 60s</small></td>
+            <td><div class="muscle-tags"><span class="tag primary">Quadriceps</span><span class="tag primary">Glutes</span><span class="tag">Calves</span><span class="tag">Hamstrings</span></div></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td><div class="ex-name">Arm Pullover</div><div class="ex-desc">Lie on back, head at top of board, arms stretched overhead, feet on bottom of board. Sweep arms in an arc over your chest until they touch your thighs. Raise head and shoulders while pulling for more abdominal work.</div></td>
+            <td><span class="cable-badge cable-on">Cable ON</span></td>
+            <td><span class="stat">2 × 15–20</span><br><small style="color:var(--muted)">Tempo 2/3 · Rest 60s</small></td>
+            <td><div class="muscle-tags"><span class="tag primary">Shoulders</span><span class="tag primary">Upper Back (Lats)</span><span class="tag">Triceps</span><span class="tag">Chest</span><span class="tag">Upper Abs</span></div></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td><div class="ex-name">Seated Row</div><div class="ex-desc">Straddle top of board facing the column. Arms extended, palms facing each other at shoulder width. Pull into your ribcage keeping back straight. Slowly return to start.</div></td>
+            <td><span class="cable-badge cable-on">Cable ON</span></td>
+            <td><span class="stat">2 × 15–20</span><br><small style="color:var(--muted)">Tempo 2/3 · Rest 60s</small></td>
+            <td><div class="muscle-tags"><span class="tag primary">Upper Back</span><span class="tag primary">Trapezius</span><span class="tag">Biceps</span><span class="tag">Rear Deltoid</span></div></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td><div class="ex-name">Butterfly</div><div class="ex-desc">Sit at top of board facing away from column, feet on board. Stretch arms behind you, palms forward. Pull arms in an arc to chest height, keeping arms slightly bent. Slowly return behind you.</div></td>
+            <td><span class="cable-badge cable-on">Cable ON</span></td>
+            <td><span class="stat">2 × 15–20</span><br><small style="color:var(--muted)">Tempo 2/3 · Rest 60s</small></td>
+            <td><div class="muscle-tags"><span class="tag primary">Chest (Pectorals)</span><span class="tag primary">Front Deltoid</span><span class="tag">Biceps</span></div></td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td><div class="ex-name">Seated Curl</div><div class="ex-desc">Straddle board facing column, palms up. Keeping back straight, curl hands up to shoulders. Lower slowly to start.</div></td>
+            <td><span class="cable-badge cable-on">Cable ON</span></td>
+            <td><span class="stat">2 × 12–15</span><br><small style="color:var(--muted)">Tempo 2/3 · Rest 60s</small></td>
+            <td><div class="muscle-tags"><span class="tag primary">Biceps</span><span class="tag">Forearms</span><span class="tag">Shoulders</span></div></td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td><div class="ex-name">Tricep Extension</div><div class="ex-desc">Lie on back, feet on board. Bend elbows so hands are above your face. Keeping elbows fixed, push handles away from chest until arms are extended. Lower with control.</div></td>
+            <td><span class="cable-badge cable-on">Cable ON</span></td>
+            <td><span class="stat">2 × 12–15</span><br><small style="color:var(--muted)">Tempo 2/3 · Rest 60s</small></td>
+            <td><div class="muscle-tags"><span class="tag primary">Triceps</span><span class="tag">Forearms</span></div></td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td><div class="ex-name">Decline Abdominal Crunch</div><div class="ex-desc">Start in squat position, feet on wing, arms crossed on chest. Lift only head and shoulders, crunching the abs. Lower back stays on the board throughout.</div></td>
+            <td><span class="cable-badge cable-off">Cable OFF</span><br><span class="cable-badge wing-badge">Wing ON</span></td>
+            <td><span class="stat">2 × 15–20</span><br><small style="color:var(--muted)">Tempo 2/3 · Rest 60s</small></td>
+            <td><div class="muscle-tags"><span class="tag primary">Upper Abs</span><span class="tag primary">Lower Abs</span></div></td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td><div class="ex-name">Twister</div><div class="ex-desc">Sit sideways on board, arms slightly bent, hands at waist level. Rotate toward the column, then use your obliques to pull the handles and rotate the other way, driving the glideboard up. Repeat both sides.</div></td>
+            <td><span class="cable-badge cable-on">Cable ON</span></td>
+            <td><span class="stat">2 × 12–15</span><br><small style="color:var(--muted)">each side · Tempo 2/3 · Rest 60s</small></td>
+            <td><div class="muscle-tags"><span class="tag primary">Obliques</span><span class="tag primary">Side Abs</span><span class="tag">Lower Back</span><span class="tag">Upper Back</span></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="background:var(--blue-light);border-color:var(--blue-mid)">
+    <p style="font-size:0.85rem;color:var(--blue-dark)">
+      <strong>Key:</strong>
+      <span class="tag primary" style="margin:0 4px">Dark blue</span> = primary muscles &nbsp;|&nbsp;
+      <span class="tag" style="margin:0 4px">Light blue</span> = secondary muscles &nbsp;|&nbsp;
+      <span class="cable-badge cable-on">Cable ON</span> = hook pulley cable &nbsp;|&nbsp;
+      <span class="cable-badge cable-off">Cable OFF</span> = unhook pulley cable &nbsp;|&nbsp;
+      <span class="cable-badge wing-badge">Wing ON</span> = attach wing accessory
+    </p>
+  </div>
+
+  <div class="section-title">
+    <div class="badge">🧘</div>
+    <div><h2>Cool-Down &amp; Stretching</h2><p>10 minutes — end of every session</p></div>
+  </div>
+  <div class="card">
+    <ul class="activity-list">
+      <li><strong>Stretcher (#7)</strong> — Sit facing column, legs on board. Reach forward slowly, hold 5 seconds × 5. <em>Targets: Hamstrings, lower back.</em></li>
+      <li><strong>Groin Stretch (#35)</strong> — Heel to heel, back straight, reach forward gently. Hold 10 seconds × 3. <em>Targets: Groin, hips, hamstrings.</em></li>
+      <li><strong>Chest Stretch (off machine)</strong> — Clasp hands behind back, draw shoulder blades together. Hold 30 seconds. <em>Targets: Chest, front shoulders.</em></li>
+      <li><strong>Shoulder rolls &amp; neck tilts</strong> — Slow, controlled for 1 minute. Releases tension in neck and upper traps.</li>
+    </ul>
+  </div>
+
+  <div class="section-title">
+    <div class="badge">📈</div>
+    <div><h2>8-Week Progression Plan</h2></div>
+  </div>
+  <div class="card" style="padding:0;overflow:hidden">
+    <table class="prog-table">
+      <thead>
+        <tr><th>Week</th><th>Circuits</th><th>Target Reps</th><th>Resistance Level</th><th>Goal</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1–2</strong></td><td>1 circuit</td><td>15 reps</td><td>Level 2</td><td>Learn form and get comfortable on the machine</td></tr>
+        <tr><td><strong>3–4</strong></td><td>2 circuits</td><td>15–20 reps</td><td>Level 2–3</td><td>Build endurance and confidence</td></tr>
+        <tr><td><strong>5–6</strong></td><td>2 circuits</td><td>15–20 reps</td><td>Level 3</td><td>Increase resistance, maintain form</td></tr>
+        <tr><td><strong>7–8</strong></td><td>2 circuits</td><td>12–20 reps</td><td>Level 3–4</td><td>Push strength, prepare for Intermediate programme</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-title">
+    <div class="badge">✅</div>
+    <div><h2>Important Safety &amp; Training Tips</h2></div>
+  </div>
+  <div class="tips-grid">
+    <div class="tip-card"><strong>Consult Your GP</strong>Always seek medical advice before starting a new exercise programme.</div>
+    <div class="tip-card"><strong>Grip Handles First</strong>When cables are hooked, always grasp handles before getting on or off the glideboard.</div>
+    <div class="tip-card"><strong>Control the Board</strong>Maintain control of the glideboard at all times — never let it slide freely.</div>
+    <div class="tip-card"><strong>Rest Days Matter</strong>Muscles grow during recovery. Rest days are just as important as sessions.</div>
+    <div class="tip-card"><strong>Normal vs Sharp Pain</strong>Some soreness in weeks 1–2 is normal. Sharp or joint pain is not — stop and seek advice.</div>
+    <div class="tip-card"><strong>Stay Hydrated</strong>Drink water before, during and after every session.</div>
+    <div class="tip-card"><strong>Check Equipment</strong>Inspect cables and pulleys for wear before each use. Use on a solid, level surface only.</div>
+    <div class="tip-card"><strong>After 8 Weeks</strong>Progress to the Intermediate Programme detailed in your Total Gym 1000 manual.</div>
+  </div>
+
+</main>
+<footer>Total Gym® 1000 Beginner Strength Programme · Based on the Official Total Gym® 1000 Exercise Booklet · Always consult your physician before starting any exercise programme</footer>
+</body>
+</html>
