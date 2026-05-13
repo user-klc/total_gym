@@ -1,271 +1,712 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Total Gym 1000 — Beginner Strength Programme</title>
-  <style>
-    :root {
-      --blue: #1a6fa8; --blue-dark: #124e78; --blue-light: #e8f3fb;
-      --blue-mid: #cce4f5; --accent: #f0a500; --text: #1c2b3a;
-      --muted: #5a7285; --white: #ffffff; --bg: #f4f8fc;
-      --card: #ffffff; --border: #d0e4f0; --green: #2a7a4b;
-      --green-light: #e6f5ee; --tag-bg: #dbeeff; --tag-text: #0f4f80;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
-    header { background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 100%); color: white; padding: 48px 24px 40px; text-align: center; }
-    header .logo { font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; opacity: 0.7; margin-bottom: 10px; }
-    header h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 8px; }
-    header h1 span { color: var(--accent); }
-    header p { font-size: 1rem; opacity: 0.85; max-width: 500px; margin: 0 auto; }
-    .overview-bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; padding: 20px 24px; background: var(--blue-dark); border-top: 1px solid rgba(255,255,255,0.12); }
-    .pill { background: rgba(255,255,255,0.12); color: white; border-radius: 30px; padding: 6px 16px; font-size: 0.82rem; font-weight: 600; display: flex; align-items: center; gap: 6px; }
-    main { max-width: 1000px; margin: 0 auto; padding: 40px 20px 60px; }
-    .section-title { display: flex; align-items: center; gap: 12px; margin: 40px 0 20px; }
-    .section-title .badge { background: var(--blue); color: white; border-radius: 8px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
-    .section-title h2 { font-size: 1.3rem; font-weight: 700; color: var(--blue-dark); }
-    .section-title p { font-size: 0.85rem; color: var(--muted); }
-    .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-    .structure-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 20px; }
-    .structure-item { background: var(--blue-light); border: 1px solid var(--blue-mid); border-radius: 12px; padding: 16px; text-align: center; }
-    .structure-item .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue); font-weight: 700; margin-bottom: 4px; }
-    .structure-item .value { font-size: 1.1rem; font-weight: 800; color: var(--blue-dark); }
-    .activity-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-    .activity-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.92rem; }
-    .activity-list li::before { content: '→'; color: var(--blue); font-weight: 700; flex-shrink: 0; margin-top: 2px; }
-    .exercise-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-    .exercise-table thead tr { background: var(--blue-dark); color: white; }
-    .exercise-table thead th { padding: 12px 14px; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
-    .exercise-table tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
-    .exercise-table tbody tr:hover { background: var(--blue-light); }
-    .exercise-table td { padding: 14px; vertical-align: top; }
-    .exercise-table td:first-child { font-weight: 700; color: var(--blue-dark); width: 28px; }
-    .ex-name { font-weight: 700; color: var(--text); margin-bottom: 3px; }
-    .ex-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.45; }
-    .muscle-tags { display: flex; flex-wrap: wrap; gap: 5px; }
-    .tag { background: var(--tag-bg); color: var(--tag-text); border-radius: 20px; padding: 3px 10px; font-size: 0.73rem; font-weight: 600; white-space: nowrap; }
-    .tag.primary { background: var(--blue); color: white; }
-    .stat { display: inline-block; background: var(--blue-light); color: var(--blue-dark); border-radius: 6px; padding: 2px 8px; font-size: 0.82rem; font-weight: 700; }
-    .cable-badge { display: inline-block; font-size: 0.7rem; padding: 2px 7px; border-radius: 4px; font-weight: 700; margin: 2px 0; vertical-align: middle; }
-    .cable-on { background: #fff3cd; color: #7a5000; border: 1px solid #f0c040; }
-    .cable-off { background: #f0f0f0; color: #555; border: 1px solid #ccc; }
-    .wing-badge { background: #e8f5e9; color: #2a6b3c; border: 1px solid #a5d6a7; }
-    .tempo-box { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 14px; }
-    .tempo-side { flex: 1; min-width: 160px; background: var(--blue-light); border: 1px solid var(--blue-mid); border-radius: 10px; padding: 14px; text-align: center; }
-    .tempo-side .num { font-size: 2.4rem; font-weight: 900; color: var(--blue-dark); line-height: 1; }
-    .tempo-side .label { font-size: 0.78rem; color: var(--muted); margin-top: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
-    .tempo-side .sub { font-size: 0.82rem; color: var(--blue); font-weight: 600; margin-top: 2px; }
-    .prog-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-    .prog-table th { background: var(--blue); color: white; padding: 10px 14px; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.07em; }
-    .prog-table td { padding: 11px 14px; border-bottom: 1px solid var(--border); }
-    .prog-table tr:last-child td { border-bottom: none; }
-    .prog-table tr:nth-child(even) td { background: var(--blue-light); }
-    .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
-    .tip-card { background: var(--green-light); border: 1px solid #b2dfcb; border-left: 4px solid var(--green); border-radius: 10px; padding: 16px; font-size: 0.87rem; line-height: 1.5; }
-    .tip-card strong { display: block; color: var(--green); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 5px; }
-    footer { text-align: center; padding: 30px 20px; font-size: 0.8rem; color: var(--muted); border-top: 1px solid var(--border); }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Total Gym 1000 — Workout Tracker</title>
+<style>
+:root {
+  --blue:#1a6fa8; --blue-dark:#124e78; --blue-light:#e8f3fb; --blue-mid:#cce4f5;
+  --accent:#f0a500; --text:#1c2b3a; --muted:#5a7285;
+  --bg:#f4f8fc; --card:#fff; --border:#d0e4f0;
+  --green:#2a7a4b; --green-light:#e6f5ee; --green-mid:#b2dfcb;
+  --red:#c0392b; --red-light:#fdecea;
+  --orange:#b86200; --orange-bg:#fff8e6; --orange-border:#f0d080;
+  --tag-bg:#dbeeff; --tag-text:#0f4f80;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;min-height:100vh;}
+
+header{background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;padding:18px 20px 14px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.18);}
+.hdr{max-width:700px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.hdr-title{font-size:1.1rem;font-weight:800;}
+.hdr-title span{color:var(--accent);}
+.hdr-sub{font-size:.73rem;opacity:.72;margin-top:2px;}
+.sbadge{background:rgba(255,255,255,.15);border-radius:20px;padding:5px 13px;font-size:.77rem;font-weight:700;border:none;color:#fff;cursor:pointer;}
+
+.prog-wrap{background:var(--blue-dark);padding:0 20px 12px;}
+.prog-inner{max-width:700px;margin:0 auto;}
+.prog-lbl{display:flex;justify-content:space-between;font-size:.71rem;color:rgba(255,255,255,.6);margin-bottom:4px;}
+.prog-track{height:6px;background:rgba(255,255,255,.18);border-radius:10px;overflow:hidden;}
+.prog-fill{height:100%;background:var(--accent);border-radius:10px;transition:width .4s ease;width:0%;}
+
+main{max-width:700px;margin:0 auto;padding:18px 14px 100px;}
+
+.week-bar{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:11px 15px;margin-bottom:14px;}
+.week-bar label{font-size:.8rem;font-weight:700;flex-shrink:0;}
+.week-bar select{flex:1;border:1.5px solid var(--border);border-radius:7px;padding:6px 9px;font-size:.84rem;font-family:inherit;color:var(--text);background:var(--bg);}
+.week-bar select:focus{outline:none;border-color:var(--blue);}
+
+.phase-hdr{display:flex;align-items:center;gap:10px;margin:22px 0 10px;}
+.ph-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;color:#fff;}
+.ph-blue{background:var(--blue);}
+.ph-orange{background:var(--orange);}
+.ph-green{background:var(--green);}
+.phase-title{font-size:1rem;font-weight:700;color:var(--blue-dark);}
+.phase-sub{font-size:.77rem;color:var(--muted);}
+
+.circuit-chip{display:inline-block;font-size:.71rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--blue);background:var(--blue-light);border:1px solid var(--blue-mid);border-radius:6px;padding:3px 10px;margin:6px 0 8px;}
+
+.ex-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;margin-bottom:9px;overflow:hidden;transition:border-color .2s,box-shadow .2s;}
+.ex-card.active{border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,111,168,.11);}
+.ex-card.done{border-color:var(--green-mid);background:#f7fdf9;}
+.ex-card.skipped{border-color:var(--orange-border);background:var(--orange-bg);opacity:.82;}
+
+.ex-hdr{display:flex;align-items:center;gap:11px;padding:13px 15px;cursor:pointer;user-select:none;}
+.ex-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;flex-shrink:0;background:var(--blue-light);color:var(--blue-dark);transition:all .2s;}
+.ex-card.done .ex-num{background:var(--green);color:#fff;}
+.ex-card.skipped .ex-num{background:var(--orange-border);color:var(--orange);}
+.ex-info{flex:1;min-width:0;}
+.ex-name{font-weight:700;font-size:.93rem;}
+.ex-meta{font-size:.76rem;color:var(--muted);margin-top:1px;}
+.ex-chev{font-size:.85rem;color:var(--muted);transition:transform .2s;flex-shrink:0;}
+.ex-chev.open{transform:rotate(180deg);}
+
+.ex-body{display:none;padding:0 15px 15px;border-top:1px solid var(--border);}
+.ex-body.open{display:block;}
+.ex-desc{font-size:.84rem;color:var(--muted);margin:11px 0 10px;line-height:1.55;}
+
+.badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:11px;}
+.bdg{font-size:.71rem;font-weight:700;padding:3px 9px;border-radius:6px;border:1px solid;}
+.bdg-on{background:#fff3cd;color:#7a5000;border-color:#f0c040;}
+.bdg-off{background:#f0f0f0;color:#555;border-color:#ccc;}
+.bdg-wing{background:#e8f5e9;color:#2a6b3c;border-color:#a5d6a7;}
+
+.mtags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:13px;}
+.tag{background:var(--tag-bg);color:var(--tag-text);border-radius:20px;padding:3px 9px;font-size:.71rem;font-weight:600;}
+.tag.p{background:var(--blue);color:#fff;}
+
+.sets-ttl{font-size:.77rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px;}
+.set-row{display:flex;align-items:center;gap:9px;margin-bottom:7px;background:var(--bg);border-radius:9px;padding:9px 11px;border:1px solid var(--border);transition:background .2s,border-color .2s;}
+.set-row.sdone{background:var(--green-light);border-color:var(--green-mid);}
+.set-lbl{font-size:.76rem;font-weight:700;color:var(--muted);width:38px;flex-shrink:0;}
+.set-fields{display:flex;gap:6px;flex:1;}
+.set-fld{display:flex;flex-direction:column;align-items:center;flex:1;}
+.set-fld label{font-size:.63rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;}
+.set-fld input{width:100%;padding:6px 4px;border:1.5px solid var(--border);border-radius:7px;font-size:.9rem;font-weight:700;text-align:center;color:var(--text);background:#fff;}
+.set-fld input:focus{outline:none;border-color:var(--blue);}
+.set-tick{width:32px;height:32px;border-radius:50%;border:2px solid var(--border);background:#fff;color:var(--muted);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+.set-tick:hover{border-color:var(--green);color:var(--green);}
+.set-tick.ticked{border-color:var(--green);background:var(--green);color:#fff;}
+
+.notes-lbl{font-size:.77rem;font-weight:700;display:block;margin-bottom:4px;margin-top:10px;}
+.notes-ta{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:7px 10px;font-size:.84rem;font-family:inherit;color:var(--text);resize:vertical;min-height:50px;background:var(--bg);margin-bottom:12px;}
+.notes-ta:focus{outline:none;border-color:var(--blue);}
+
+.ex-btns{display:flex;gap:7px;flex-wrap:wrap;}
+.btn{padding:9px 14px;border-radius:8px;font-size:.83rem;font-weight:700;border:none;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:5px;}
+.btn-primary{background:var(--blue);color:#fff;flex:1;justify-content:center;}
+.btn-primary:hover{background:var(--blue-dark);}
+.btn-success{background:var(--green);color:#fff;flex:1;justify-content:center;}
+.btn-success:hover{filter:brightness(.9);}
+.btn-ghost{background:var(--bg);color:var(--muted);border:1.5px solid var(--border);}
+.btn-ghost:hover{border-color:var(--muted);color:var(--text);}
+
+.rest-wrap{display:none;background:var(--orange-bg);border:1px solid var(--orange-border);border-radius:10px;padding:11px 13px;margin-top:10px;align-items:center;gap:11px;}
+.rest-wrap.show{display:flex;}
+.timer-num{font-size:1.5rem;font-weight:900;color:var(--orange);min-width:48px;}
+.timer-lbl{font-size:.79rem;color:var(--orange);font-weight:600;flex:1;}
+.timer-skip{background:none;border:1.5px solid var(--orange-border);border-radius:6px;padding:5px 10px;font-size:.74rem;font-weight:700;color:var(--orange);cursor:pointer;}
+
+.info-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;margin-bottom:9px;overflow:hidden;}
+.info-card.done{border-color:var(--green-mid);background:#f7fdf9;}
+.info-hdr{display:flex;align-items:center;gap:11px;padding:13px 15px;cursor:pointer;user-select:none;}
+.info-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;}
+.info-title{font-weight:700;font-size:.93rem;flex:1;}
+.info-body{display:none;padding:0 15px 15px;border-top:1px solid var(--border);}
+.info-body.open{display:block;}
+.info-item{display:flex;align-items:flex-start;gap:8px;font-size:.84rem;color:var(--muted);margin-top:9px;line-height:1.5;}
+.info-item::before{content:'→';color:var(--blue);font-weight:700;flex-shrink:0;}
+
+.sticky-btm{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);padding:11px 14px;z-index:90;box-shadow:0 -4px 16px rgba(0,0,0,.06);}
+.sticky-inner{max-width:700px;margin:0 auto;display:flex;gap:9px;}
+.btn-log-view{background:var(--blue-light);color:var(--blue-dark);border:1.5px solid var(--blue-mid);flex:0 0 auto;}
+
+#log-panel{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:150;align-items:flex-end;}
+#log-panel.show{display:flex;}
+.sheet{background:#fff;border-radius:20px 20px 0 0;padding:22px 18px 40px;width:100%;max-height:82vh;overflow-y:auto;}
+.sheet h2{font-size:1.05rem;font-weight:800;margin-bottom:14px;color:var(--blue-dark);}
+.sheet-close{float:right;background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--muted);margin-top:-4px;}
+.log-entry{border-bottom:1px solid var(--border);padding:11px 0;font-size:.84rem;}
+.log-entry:last-child{border-bottom:none;}
+.log-ex-name{font-weight:700;margin-bottom:3px;}
+.log-sets{color:var(--muted);font-size:.79rem;}
+.log-note{color:var(--blue);font-size:.79rem;margin-top:2px;font-style:italic;}
+.empty-msg{text-align:center;color:var(--muted);padding:20px 0;font-size:.87rem;}
+
+#hist-panel{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:150;align-items:flex-end;}
+#hist-panel.show{display:flex;}
+.hist-session{background:var(--blue-light);border:1px solid var(--blue-mid);border-radius:10px;padding:12px 14px;margin-bottom:10px;}
+.hist-date{font-weight:700;font-size:.9rem;color:var(--blue-dark);margin-bottom:4px;}
+.hist-meta{font-size:.78rem;color:var(--muted);}
+.hist-extra{margin-top:6px;font-size:.79rem;color:var(--muted);}
+
+#done-screen{display:none;position:fixed;inset:0;background:rgba(18,78,120,.97);z-index:200;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px 22px;color:#fff;}
+#done-screen.show{display:flex;}
+.done-icon{font-size:3.8rem;margin-bottom:14px;}
+.done-title{font-size:1.9rem;font-weight:900;margin-bottom:6px;}
+.done-sub{opacity:.8;font-size:.93rem;margin-bottom:26px;max-width:340px;}
+.done-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:26px;width:100%;max-width:380px;}
+.done-stat{background:rgba(255,255,255,.1);border-radius:12px;padding:13px 8px;}
+.done-stat .dn{font-size:1.75rem;font-weight:900;color:var(--accent);}
+.done-stat .dl{font-size:.7rem;opacity:.72;margin-top:2px;}
+.done-actions{display:flex;flex-direction:column;gap:9px;width:100%;max-width:320px;}
+.btn-dw{background:#fff;color:var(--blue-dark);font-size:.88rem;padding:12px 18px;border-radius:10px;border:none;cursor:pointer;font-weight:700;}
+.btn-do{background:transparent;border:2px solid rgba(255,255,255,.35);color:#fff;font-size:.88rem;padding:11px 18px;border-radius:10px;cursor:pointer;font-weight:700;}
+
+@media(max-width:400px){.done-stats{grid-template-columns:1fr 1fr;}.set-fields{gap:4px;}}
+</style>
 </head>
 <body>
 
 <header>
-  <div class="logo">Exercise Programme</div>
-  <h1>Total Gym<span>®</span> 1000</h1>
-  <p>Beginner Full-Body Strength Programme — 3 Days Per Week</p>
+  <div class="hdr">
+    <div>
+      <div class="hdr-title">Total Gym<span>&#174;</span> 1000</div>
+      <div class="hdr-sub" id="session-date"></div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="sbadge" onclick="openHist()">&#128218; History</button>
+      <div class="sbadge" id="session-label">Beginner &#xb7; Wk 1</div>
+    </div>
+  </div>
 </header>
 
-<div class="overview-bar">
-  <div class="pill">📅 3 Days / Week</div>
-  <div class="pill">⏱ ~60 Min / Session</div>
-  <div class="pill">🎯 Full-Body Strength</div>
-  <div class="pill">📈 Beginner Level</div>
-  <div class="pill">🔄 2 Circuits</div>
-  <div class="pill">⚖️ Start Level 2–3</div>
+<div class="prog-wrap">
+  <div class="prog-inner">
+    <div class="prog-lbl">
+      <span id="prog-text">0 of 9 exercises done</span>
+      <span id="prog-pct">0%</span>
+    </div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+  </div>
 </div>
 
 <main>
-
-  <div class="section-title">
-    <div class="badge">📋</div>
-    <div><h2>Session Structure</h2><p>How each 60-minute session is organised</p></div>
-  </div>
-  <div class="structure-grid">
-    <div class="structure-item"><div class="label">Warm-Up</div><div class="value">5–10 min</div></div>
-    <div class="structure-item"><div class="label">Circuit 1</div><div class="value">~20 min</div></div>
-    <div class="structure-item"><div class="label">Rest Between Circuits</div><div class="value">90 sec</div></div>
-    <div class="structure-item"><div class="label">Circuit 2</div><div class="value">~20 min</div></div>
-    <div class="structure-item"><div class="label">Cool-Down</div><div class="value">10 min</div></div>
-  </div>
-  <div class="card">
-    <p style="font-size:0.9rem;color:var(--muted)">Complete <strong>all 9 exercises in order</strong> (Circuit 1), rest 90 seconds, then repeat for Circuit 2. In <strong>weeks 1–2</strong>, aim for 1 circuit only. Build to 2 circuits from week 3 onwards. Suggested days: <strong>Monday / Wednesday / Friday</strong>.</p>
+  <div class="week-bar">
+    <label for="week-sel">Programme Week:</label>
+    <select id="week-sel" onchange="onWeekChange()">
+      <option value="1">Weeks 1&#x2013;2 &#xb7; Level 2 &#xb7; 1 circuit &#xb7; 15 reps</option>
+      <option value="3">Weeks 3&#x2013;4 &#xb7; Level 2&#x2013;3 &#xb7; 2 circuits &#xb7; 15&#x2013;20 reps</option>
+      <option value="5">Weeks 5&#x2013;6 &#xb7; Level 3 &#xb7; 2 circuits &#xb7; 15&#x2013;20 reps</option>
+      <option value="7">Weeks 7&#x2013;8 &#xb7; Level 3&#x2013;4 &#xb7; 2 circuits &#xb7; 12&#x2013;20 reps</option>
+    </select>
   </div>
 
-  <div class="section-title">
-    <div class="badge">⏱</div>
-    <div><h2>Tempo — Speed of Movement</h2><p>All exercises in this programme use a 2/3 tempo</p></div>
+  <div class="phase-hdr">
+    <div class="ph-icon ph-orange">&#128293;</div>
+    <div><div class="phase-title">Warm-Up</div><div class="phase-sub">5&#x2013;10 minutes &#xb7; Off the machine</div></div>
   </div>
-  <div class="card">
-    <p style="font-size:0.9rem;color:var(--muted);margin-bottom:14px">Controlling speed — especially on the way <em>down</em> — is key. The time a muscle is under tension drives strength adaptation.</p>
-    <div class="tempo-box">
-      <div class="tempo-side"><div class="num">2</div><div class="label">Seconds Up</div><div class="sub">Concentric (effort phase)</div></div>
-      <div class="tempo-side"><div class="num">3</div><div class="label">Seconds Down</div><div class="sub">Eccentric (return phase)</div></div>
+  <div class="info-card" id="warmup-card">
+    <div class="info-hdr" onclick="toggleInfo('warmup')">
+      <div class="info-icon" style="background:#fff8e6;color:var(--orange)">&#128293;</div>
+      <div class="info-title">Warm-Up Activities</div>
+      <span id="warmup-si">&#9744;</span>
+    </div>
+    <div class="info-body" id="warmup-body">
+      <div class="info-item">Arm circles &#x2014; 1 min forward, 1 min backward. Loosens shoulders and upper back.</div>
+      <div class="info-item">Bodyweight squats &#x2014; 15 slow reps. Warms up hips, knees and quads.</div>
+      <div class="info-item">Hip circles &#x2014; 10 each direction. Mobilises the hip joints.</div>
+      <div class="info-item">Gentle torso twists &#x2014; 20 reps. Prepares spine and obliques.</div>
+      <div style="margin-top:13px"><button class="btn btn-primary" style="width:100%" onclick="completeWarmup()">&#10003; Mark Warm-Up Complete</button></div>
     </div>
   </div>
 
-  <div class="section-title">
-    <div class="badge">🔥</div>
-    <div><h2>Warm-Up</h2><p>5–10 minutes — off the machine</p></div>
+  <div class="phase-hdr">
+    <div class="ph-icon ph-blue">&#128170;</div>
+    <div><div class="phase-title">Main Workout</div><div class="phase-sub" id="workout-sub">9 exercises &#xb7; 1 set &#xb7; Tempo 2/3 &#xb7; 60s rest</div></div>
   </div>
-  <div class="card">
-    <ul class="activity-list">
-      <li><strong>Arm circles</strong> — 1 minute forward, 1 minute backward. Loosens shoulders and upper back.</li>
-      <li><strong>Bodyweight squats</strong> — 15 slow reps. Warms up hips, knees and quads.</li>
-      <li><strong>Hip circles</strong> — 10 each direction. Mobilises the hip joints.</li>
-      <li><strong>Gentle torso twists</strong> — 20 reps. Prepares the spine and obliques.</li>
-    </ul>
-  </div>
+  <div id="ex-container"></div>
 
-  <div class="section-title">
-    <div class="badge">💪</div>
-    <div><h2>Main Workout — Full-Body Circuit</h2><p>9 exercises · 2 sets each · 60 sec rest between exercises · 2/3 tempo</p></div>
+  <div class="phase-hdr">
+    <div class="ph-icon ph-green">&#129496;</div>
+    <div><div class="phase-title">Cool-Down &amp; Stretching</div><div class="phase-sub">10 minutes &#xb7; End of every session</div></div>
   </div>
-
-  <div class="card" style="padding:0;overflow:hidden">
-    <div style="overflow-x:auto">
-      <table class="exercise-table">
-        <thead>
-          <tr>
-            <th>#</th><th>Exercise</th><th>Setup</th><th>Sets / Reps</th><th>Muscles Targeted</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td><div class="ex-name">Leg Pull</div><div class="ex-desc">Secure feet under top bar of wing. Lie on back, legs straight, buttocks near top of board. Pull glideboard toward heels. Lift head and shoulders for added abdominal work.</div></td>
-            <td><span class="cable-badge cable-off">Cable OFF</span><br><span class="cable-badge wing-badge">Wing ON</span></td>
-            <td><span class="stat">2 × 15–20</span><br><small style="color:var(--muted)">Tempo 2/3 · Rest 60s</small></td>
-            <td><div class="muscle-tags"><span class="tag primary">Hamstrings</span><span class="tag primary">Glutes</span><span class="tag">Calves</span><span class="tag">Lower Abs</span><span class="tag">Upper Abs</span><span class="tag">Hips</span><span class="tag">Thighs</span></div></td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td><div class="ex-name">Squat</div><div class="ex-desc">Lie back on board, feet flat on wing, knees bent to 90°. Push until legs are fully straight, lower with control. Feet slightly spaced apart.</div></td>
-            <td><span class="cable-badge cable-off">Cable OFF</span><br><span class="cable-badge wing-badge">Wing ON</span></td>
-            <td><span class="stat">2 × 15–20</span><br><small style="color:var(--muted)">Tempo 2/3 · Rest 60s</small></td>
-            <td><div class="muscle-tags"><span class="tag primary">Quadriceps</span><span class="tag primary">Glutes</span><span class="tag">Calves</span><span class="tag">Hamstrings</span></div></td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td><div class="ex-name">Arm Pullover</div><div class="ex-desc">Lie on back, head at top of board, arms stretched overhead, feet on bottom of board. Sweep arms in an arc over your chest until they touch your thighs. Raise head and shoulders while pulling for more abdominal work.</div></td>
-            <td><span class="cable-badge cable-on">Cable ON</span></td>
-            <td><span class="stat">2 × 15–20</span><br><small style="color:var(--muted)">Tempo 2/3 · Rest 60s</small></td>
-            <td><div class="muscle-tags"><span class="tag primary">Shoulders</span><span class="tag primary">Upper Back (Lats)</span><span class="tag">Triceps</span><span class="tag">Chest</span><span class="tag">Upper Abs</span></div></td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td><div class="ex-name">Seated Row</div><div class="ex-desc">Straddle top of board facing the column. Arms extended, palms facing each other at shoulder width. Pull into your ribcage keeping back straight. Slowly return to start.</div></td>
-            <td><span class="cable-badge cable-on">Cable ON</span></td>
-            <td><span class="stat">2 × 15–20</span><br><small style="color:var(--muted)">Tempo 2/3 · Rest 60s</small></td>
-            <td><div class="muscle-tags"><span class="tag primary">Upper Back</span><span class="tag primary">Trapezius</span><span class="tag">Biceps</span><span class="tag">Rear Deltoid</span></div></td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td><div class="ex-name">Butterfly</div><div class="ex-desc">Sit at top of board facing away from column, feet on board. Stretch arms behind you, palms forward. Pull arms in an arc to chest height, keeping arms slightly bent. Slowly return behind you.</div></td>
-            <td><span class="cable-badge cable-on">Cable ON</span></td>
-            <td><span class="stat">2 × 15–20</span><br><small style="color:var(--muted)">Tempo 2/3 · Rest 60s</small></td>
-            <td><div class="muscle-tags"><span class="tag primary">Chest (Pectorals)</span><span class="tag primary">Front Deltoid</span><span class="tag">Biceps</span></div></td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td><div class="ex-name">Seated Curl</div><div class="ex-desc">Straddle board facing column, palms up. Keeping back straight, curl hands up to shoulders. Lower slowly to start.</div></td>
-            <td><span class="cable-badge cable-on">Cable ON</span></td>
-            <td><span class="stat">2 × 12–15</span><br><small style="color:var(--muted)">Tempo 2/3 · Rest 60s</small></td>
-            <td><div class="muscle-tags"><span class="tag primary">Biceps</span><span class="tag">Forearms</span><span class="tag">Shoulders</span></div></td>
-          </tr>
-          <tr>
-            <td>7</td>
-            <td><div class="ex-name">Tricep Extension</div><div class="ex-desc">Lie on back, feet on board. Bend elbows so hands are above your face. Keeping elbows fixed, push handles away from chest until arms are extended. Lower with control.</div></td>
-            <td><span class="cable-badge cable-on">Cable ON</span></td>
-            <td><span class="stat">2 × 12–15</span><br><small style="color:var(--muted)">Tempo 2/3 · Rest 60s</small></td>
-            <td><div class="muscle-tags"><span class="tag primary">Triceps</span><span class="tag">Forearms</span></div></td>
-          </tr>
-          <tr>
-            <td>8</td>
-            <td><div class="ex-name">Decline Abdominal Crunch</div><div class="ex-desc">Start in squat position, feet on wing, arms crossed on chest. Lift only head and shoulders, crunching the abs. Lower back stays on the board throughout.</div></td>
-            <td><span class="cable-badge cable-off">Cable OFF</span><br><span class="cable-badge wing-badge">Wing ON</span></td>
-            <td><span class="stat">2 × 15–20</span><br><small style="color:var(--muted)">Tempo 2/3 · Rest 60s</small></td>
-            <td><div class="muscle-tags"><span class="tag primary">Upper Abs</span><span class="tag primary">Lower Abs</span></div></td>
-          </tr>
-          <tr>
-            <td>9</td>
-            <td><div class="ex-name">Twister</div><div class="ex-desc">Sit sideways on board, arms slightly bent, hands at waist level. Rotate toward the column, then use your obliques to pull the handles and rotate the other way, driving the glideboard up. Repeat both sides.</div></td>
-            <td><span class="cable-badge cable-on">Cable ON</span></td>
-            <td><span class="stat">2 × 12–15</span><br><small style="color:var(--muted)">each side · Tempo 2/3 · Rest 60s</small></td>
-            <td><div class="muscle-tags"><span class="tag primary">Obliques</span><span class="tag primary">Side Abs</span><span class="tag">Lower Back</span><span class="tag">Upper Back</span></div></td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="info-card" id="cooldown-card">
+    <div class="info-hdr" onclick="toggleInfo('cooldown')">
+      <div class="info-icon" style="background:var(--green-light);color:var(--green)">&#129496;</div>
+      <div class="info-title">Cool-Down Stretches</div>
+      <span id="cooldown-si">&#9744;</span>
+    </div>
+    <div class="info-body" id="cooldown-body">
+      <div class="info-item"><strong>Stretcher (#7)</strong> &#x2014; Sit facing column, legs on board. Reach forward, hold 5 sec &#xd7; 5. Hamstrings, lower back.</div>
+      <div class="info-item"><strong>Groin Stretch (#35)</strong> &#x2014; Heel to heel, back straight, reach forward gently. Hold 10 sec &#xd7; 3. Groin, hips, hamstrings.</div>
+      <div class="info-item"><strong>Chest Stretch</strong> &#x2014; Clasp hands behind back. Hold 30 sec. Chest, front shoulders.</div>
+      <div class="info-item"><strong>Shoulder rolls &amp; neck tilts</strong> &#x2014; Slow, controlled for 1 minute.</div>
+      <div style="margin-top:13px"><button class="btn btn-success" style="width:100%" onclick="completeCooldown()">&#10003; Mark Cool-Down Complete</button></div>
     </div>
   </div>
-
-  <div class="card" style="background:var(--blue-light);border-color:var(--blue-mid)">
-    <p style="font-size:0.85rem;color:var(--blue-dark)">
-      <strong>Key:</strong>
-      <span class="tag primary" style="margin:0 4px">Dark blue</span> = primary muscles &nbsp;|&nbsp;
-      <span class="tag" style="margin:0 4px">Light blue</span> = secondary muscles &nbsp;|&nbsp;
-      <span class="cable-badge cable-on">Cable ON</span> = hook pulley cable &nbsp;|&nbsp;
-      <span class="cable-badge cable-off">Cable OFF</span> = unhook pulley cable &nbsp;|&nbsp;
-      <span class="cable-badge wing-badge">Wing ON</span> = attach wing accessory
-    </p>
-  </div>
-
-  <div class="section-title">
-    <div class="badge">🧘</div>
-    <div><h2>Cool-Down &amp; Stretching</h2><p>10 minutes — end of every session</p></div>
-  </div>
-  <div class="card">
-    <ul class="activity-list">
-      <li><strong>Stretcher (#7)</strong> — Sit facing column, legs on board. Reach forward slowly, hold 5 seconds × 5. <em>Targets: Hamstrings, lower back.</em></li>
-      <li><strong>Groin Stretch (#35)</strong> — Heel to heel, back straight, reach forward gently. Hold 10 seconds × 3. <em>Targets: Groin, hips, hamstrings.</em></li>
-      <li><strong>Chest Stretch (off machine)</strong> — Clasp hands behind back, draw shoulder blades together. Hold 30 seconds. <em>Targets: Chest, front shoulders.</em></li>
-      <li><strong>Shoulder rolls &amp; neck tilts</strong> — Slow, controlled for 1 minute. Releases tension in neck and upper traps.</li>
-    </ul>
-  </div>
-
-  <div class="section-title">
-    <div class="badge">📈</div>
-    <div><h2>8-Week Progression Plan</h2></div>
-  </div>
-  <div class="card" style="padding:0;overflow:hidden">
-    <table class="prog-table">
-      <thead>
-        <tr><th>Week</th><th>Circuits</th><th>Target Reps</th><th>Resistance Level</th><th>Goal</th></tr>
-      </thead>
-      <tbody>
-        <tr><td><strong>1–2</strong></td><td>1 circuit</td><td>15 reps</td><td>Level 2</td><td>Learn form and get comfortable on the machine</td></tr>
-        <tr><td><strong>3–4</strong></td><td>2 circuits</td><td>15–20 reps</td><td>Level 2–3</td><td>Build endurance and confidence</td></tr>
-        <tr><td><strong>5–6</strong></td><td>2 circuits</td><td>15–20 reps</td><td>Level 3</td><td>Increase resistance, maintain form</td></tr>
-        <tr><td><strong>7–8</strong></td><td>2 circuits</td><td>12–20 reps</td><td>Level 3–4</td><td>Push strength, prepare for Intermediate programme</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="section-title">
-    <div class="badge">✅</div>
-    <div><h2>Important Safety &amp; Training Tips</h2></div>
-  </div>
-  <div class="tips-grid">
-    <div class="tip-card"><strong>Consult Your GP</strong>Always seek medical advice before starting a new exercise programme.</div>
-    <div class="tip-card"><strong>Grip Handles First</strong>When cables are hooked, always grasp handles before getting on or off the glideboard.</div>
-    <div class="tip-card"><strong>Control the Board</strong>Maintain control of the glideboard at all times — never let it slide freely.</div>
-    <div class="tip-card"><strong>Rest Days Matter</strong>Muscles grow during recovery. Rest days are just as important as sessions.</div>
-    <div class="tip-card"><strong>Normal vs Sharp Pain</strong>Some soreness in weeks 1–2 is normal. Sharp or joint pain is not — stop and seek advice.</div>
-    <div class="tip-card"><strong>Stay Hydrated</strong>Drink water before, during and after every session.</div>
-    <div class="tip-card"><strong>Check Equipment</strong>Inspect cables and pulleys for wear before each use. Use on a solid, level surface only.</div>
-    <div class="tip-card"><strong>After 8 Weeks</strong>Progress to the Intermediate Programme detailed in your Total Gym 1000 manual.</div>
-  </div>
-
 </main>
-<footer>Total Gym® 1000 Beginner Strength Programme · Based on the Official Total Gym® 1000 Exercise Booklet · Always consult your physician before starting any exercise programme</footer>
+
+<div class="sticky-btm">
+  <div class="sticky-inner">
+    <button class="btn btn-log-view" onclick="openLog()">&#128203; Log</button>
+    <button class="btn btn-primary" id="next-btn" onclick="goToNext()" style="flex:1">&#9654; Start First Exercise</button>
+  </div>
+</div>
+
+<!-- LOG PANEL -->
+<div id="log-panel" onclick="closeLogOut(event)">
+  <div class="sheet">
+    <button class="sheet-close" onclick="closeLog()">&#x2715;</button>
+    <h2>&#128203; Session Log</h2>
+    <div id="log-content"></div>
+  </div>
+</div>
+
+<!-- HISTORY PANEL -->
+<div id="hist-panel" onclick="closeHistOut(event)">
+  <div class="sheet">
+    <button class="sheet-close" onclick="closeHist()">&#x2715;</button>
+    <h2>&#128218; Session History</h2>
+    <div id="hist-content"></div>
+  </div>
+</div>
+
+<!-- DONE SCREEN -->
+<div id="done-screen">
+  <div class="done-icon">&#127942;</div>
+  <div class="done-title">Session Complete!</div>
+  <div class="done-sub">Great work. Rest up &#x2014; your muscles grow during recovery.</div>
+  <div class="done-stats">
+    <div class="done-stat"><div class="dn" id="stat-ex">0</div><div class="dl">Exercises</div></div>
+    <div class="done-stat"><div class="dn" id="stat-sets">0</div><div class="dl">Sets Done</div></div>
+    <div class="done-stat"><div class="dn" id="stat-min">0</div><div class="dl">Minutes</div></div>
+  </div>
+  <div class="done-actions">
+    <button class="btn-dw" onclick="viewLogDone()">&#128203; View Session Log</button>
+    <button class="btn-dw" onclick="viewHistDone()">&#128218; View History</button>
+    <button class="btn-do" onclick="saveReset()">&#128190; Save &amp; Start New Session</button>
+  </div>
+</div>
+
+<script>
+const EX = [
+  { id:'leg-pull', num:1, name:'Leg Pull',
+    desc:'Attach wing accessory and unhook cable. Secure feet under top bar of wing. Lie on your back, legs straight, buttocks near top of board, toes pointed. Pull the glideboard toward your feet until it nearly reaches your heels. Lower slowly. Lift head and shoulders as you pull for extra abdominal work — do not raise your lower back off the board.',
+    cable:false, wing:true, rep:'15\u201320',
+    mp:['Hamstrings','Glutes'], ms:['Calves','Lower Abs','Upper Abs','Hips','Thighs'] },
+  { id:'squat', num:2, name:'Squat',
+    desc:'Unhook cable, attach wing. Roll glideboard toward column and sit at the bottom. Lie back. Place feet flat and slightly spaced on the wing, knees bent to 90\xb0. Push until legs are straight. Lower with control and repeat.',
+    cable:false, wing:true, rep:'15\u201320',
+    mp:['Quadriceps','Glutes'], ms:['Calves','Hamstrings'] },
+  { id:'arm-pullover', num:3, name:'Arm Pullover',
+    desc:'Hook cable. Lie on your back, head at top of board, arms stretched overhead. Bend knees and place feet on bottom of board. Move arms in an arc over your chest until they touch your thighs. Return slowly. Raise head and shoulders while pulling to engage more abdominals.',
+    cable:true, wing:false, rep:'15\u201320',
+    mp:['Shoulders','Upper Back (Lats)'], ms:['Triceps','Chest','Upper Abs'] },
+  { id:'seated-row', num:4, name:'Seated Row',
+    desc:'Hook cable. Straddle top of board facing the column. Arms extended in front, palms facing each other at shoulder width. Pull into your ribcage keeping back straight. Slowly return to start.',
+    cable:true, wing:false, rep:'15\u201320',
+    mp:['Upper Back','Trapezius'], ms:['Biceps','Rear Deltoid'] },
+  { id:'butterfly', num:5, name:'Butterfly',
+    desc:'Hook cable. Sit at top of board facing away from column, feet on board. Stretch arms behind you with palms forward. Pull arms in an arc to chest height in front. Keep arms slightly bent. Slowly return behind you.',
+    cable:true, wing:false, rep:'15\u201320',
+    mp:['Chest (Pectorals)','Front Deltoid'], ms:['Biceps'] },
+  { id:'seated-curl', num:6, name:'Seated Curl',
+    desc:'Hook cable. Straddle board facing column, arms extended, palms up. Keeping back straight, curl hands to shoulders. Lower slowly to start.',
+    cable:true, wing:false, rep:'12\u201315',
+    mp:['Biceps'], ms:['Forearms','Shoulders'] },
+  { id:'tricep-ext', num:7, name:'Tricep Extension',
+    desc:'Hook cable. Lie on your back, feet on board. Bend elbows so hands are above your face. Keeping elbows fixed, push handles away from chest until arms are extended. Lower with control.',
+    cable:true, wing:false, rep:'12\u201315',
+    mp:['Triceps'], ms:['Forearms'] },
+  { id:'ab-crunch', num:8, name:'Decline Abdominal Crunch',
+    desc:'Unhook cable, attach wing. Start in squat position, feet on wing. Cross arms on chest. Lift only head and shoulders, crunching the abs. Lower back stays on the board throughout.',
+    cable:false, wing:true, rep:'15\u201320',
+    mp:['Upper Abs','Lower Abs'], ms:[] },
+  { id:'twister', num:9, name:'Twister',
+    desc:'Hook cable. Sit sideways on board, arms slightly bent, hands at waist level. Rotate toward the column, then use your obliques to pull handles and rotate the other way, driving the glideboard up. Repeat, then switch sides.',
+    cable:true, wing:false, rep:'12\u201315 each side',
+    mp:['Obliques','Side Abs'], ms:['Lower Back','Upper Back'] }
+];
+
+const WCFG = {
+  1:{ circuits:1, sets:1, rh:'15 reps', level:'2' },
+  3:{ circuits:2, sets:2, rh:'15\u201320 reps', level:'2\u20133' },
+  5:{ circuits:2, sets:2, rh:'15\u201320 reps', level:'3' },
+  7:{ circuits:2, sets:2, rh:'12\u201320 reps', level:'3\u20134' }
+};
+
+let S = {
+  wk:1, warmup:false, cooldown:false,
+  start:Date.now(), inst:[], openId:null, timerIv:null
+};
+
+const cfg = () => WCFG[S.wk];
+const iid = i => `${i.exId}-c${i.circuit}`;
+const getInst = id => S.inst.find(i => iid(i) === id);
+
+function buildInst() {
+  const c = cfg(); const arr = [];
+  for (let ci = 1; ci <= c.circuits; ci++)
+    for (const ex of EX)
+      arr.push({ exId:ex.id, circuit:ci,
+        sets: Array.from({length:c.sets}, () => ({reps:'',note:'',done:false})),
+        done:false, skipped:false, note:'' });
+  return arr;
+}
+
+function init() {
+  S.inst = buildInst(); S.start = Date.now();
+  S.warmup = false; S.cooldown = false; S.openId = null;
+  document.getElementById('session-date').textContent =
+    new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  renderAll();
+}
+
+function renderAll() {
+  renderLabel(); renderExes(); renderProg(); renderNextBtn();
+  updWarmup(); updCooldown();
+}
+
+function renderLabel() {
+  const c = cfg(); const w = S.wk;
+  const we = w===7?8:Number(w)+1;
+  document.getElementById('session-label').textContent = `Beginner \xb7 Wk ${w}\u2013${we}`;
+  document.getElementById('workout-sub').textContent =
+    `9 exercises \xb7 ${c.sets} set${c.sets>1?'s':''} \xb7 ${c.circuits} circuit${c.circuits>1?'s':''} \xb7 Tempo 2/3 \xb7 60s rest`;
+}
+
+function renderExes() {
+  const con = document.getElementById('ex-container');
+  con.innerHTML = '';
+  let lastC = 0;
+  S.inst.forEach((inst, idx) => {
+    if (inst.circuit !== lastC) {
+      lastC = inst.circuit;
+      if (cfg().circuits > 1) {
+        const ch = document.createElement('div');
+        ch.className = 'circuit-chip';
+        ch.textContent = `Circuit ${inst.circuit}`;
+        con.appendChild(ch);
+      }
+    }
+    con.appendChild(buildCard(inst, idx));
+  });
+}
+
+function buildCard(inst) {
+  const ex = EX.find(e => e.id === inst.exId);
+  const id = iid(inst);
+  const isOpen = S.openId === id;
+  const c = cfg();
+
+  const card = document.createElement('div');
+  card.className = `ex-card${inst.done?' done':inst.skipped?' skipped':''}`;
+  card.id = `card-${id}`;
+
+  const si = inst.done ? '\u2705' : inst.skipped ? '\u23ed' : '\u2610';
+  const cBdg = ex.cable
+    ? `<span class="bdg bdg-on">Cable ON</span>`
+    : `<span class="bdg bdg-off">Cable OFF</span>`;
+  const wBdg = ex.wing ? `<span class="bdg bdg-wing">Wing ON</span>` : '';
+  const ptags = ex.mp.map(m=>`<span class="tag p">${m}</span>`).join('');
+  const stags = ex.ms.map(m=>`<span class="tag">${m}</span>`).join('');
+
+  const shtml = inst.sets.map((s,si)=>`
+    <div class="set-row${s.done?' sdone':''}" id="sr-${id}-${si}">
+      <div class="set-lbl">Set ${si+1}</div>
+      <div class="set-fields">
+        <div class="set-fld"><label>Reps</label>
+          <input type="number" min="0" max="99" inputmode="numeric"
+            placeholder="${c.rh.split('\u2013')[0]}" value="${s.reps}"
+            oninput="setField('${id}',${si},'reps',this.value)"/>
+        </div>
+        <div class="set-fld"><label>Note</label>
+          <input type="text" maxlength="35" placeholder="e.g. felt hard" value="${s.note}"
+            oninput="setField('${id}',${si},'note',this.value)"/>
+        </div>
+      </div>
+      <button class="set-tick${s.done?' ticked':''}" onclick="tickSet('${id}',${si})">
+        ${s.done?'\u2713':'\u25cb'}
+      </button>
+    </div>`).join('');
+
+  const actBtns = inst.done
+    ? `<button class="btn btn-ghost" onclick="undoEx('${id}')">&#x21a9; Undo</button>`
+    : inst.skipped
+      ? `<button class="btn btn-ghost" onclick="unskipEx('${id}')">&#x21a9; Undo Skip</button>`
+      : `<button class="btn btn-success" onclick="doneEx('${id}')">&#10003; Mark Done</button>
+         <button class="btn btn-ghost" onclick="skipEx('${id}')">Skip</button>`;
+
+  card.innerHTML = `
+    <div class="ex-hdr" onclick="toggleCard('${id}')">
+      <div class="ex-num">${inst.done?'\u2713':inst.skipped?'\u23ed':ex.num}</div>
+      <div class="ex-info">
+        <div class="ex-name">${ex.name}</div>
+        <div class="ex-meta">${c.sets} set${c.sets>1?'s':''} \xb7 ${ex.rep} reps \xb7 Tempo 2/3</div>
+      </div>
+      <span>${si}</span>
+      <span class="ex-chev${isOpen?' open':''}">&#9662;</span>
+    </div>
+    <div class="ex-body${isOpen?' open':''}">
+      <p class="ex-desc">${ex.desc}</p>
+      <div class="badges">${cBdg}${wBdg}</div>
+      <div class="mtags">${ptags}${stags}</div>
+      <div class="sets-ttl">Log Your Sets</div>
+      ${shtml}
+      <label class="notes-lbl">Exercise Notes</label>
+      <textarea class="notes-ta" maxlength="200" placeholder="How did it feel? Any modifications?"
+        oninput="exNote('${id}',this.value)">${inst.note}</textarea>
+      <div class="ex-btns">${actBtns}</div>
+      <div class="rest-wrap" id="rt-${id}">
+        <div class="timer-num" id="tn-${id}">60</div>
+        <div class="timer-lbl">Rest \u2014 next exercise in\u2026</div>
+        <button class="timer-skip" onclick="skipTimer('${id}')">Skip rest</button>
+      </div>
+    </div>`;
+  return card;
+}
+
+/* --- interactions --- */
+function toggleCard(id) {
+  S.openId = S.openId === id ? null : id;
+  renderExes();
+  if (S.openId) setTimeout(()=>{
+    const el = document.getElementById(`card-${id}`);
+    if (el) el.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }, 80);
+}
+
+function setField(id, si, f, v) {
+  const inst = getInst(id); if (!inst) return;
+  inst.sets[si][f] = v;
+}
+function exNote(id, v) { const i = getInst(id); if (i) i.note = v; }
+
+function tickSet(id, si) {
+  const inst = getInst(id); if (!inst) return;
+  inst.sets[si].done = !inst.sets[si].done;
+  const row = document.getElementById(`sr-${id}-${si}`);
+  const tick = row && row.querySelector('.set-tick');
+  if (row) row.className = `set-row${inst.sets[si].done?' sdone':''}`;
+  if (tick) { tick.className=`set-tick${inst.sets[si].done?' ticked':''}`; tick.textContent=inst.sets[si].done?'\u2713':'\u25cb'; }
+}
+
+function doneEx(id) {
+  const inst = getInst(id); if (!inst) return;
+  inst.sets.forEach(s => s.done = true);
+  inst.done = true; inst.skipped = false;
+  inst.completedAt = new Date().toISOString();
+  S.openId = null;
+  renderExes(); renderProg(); renderNextBtn();
+  startTimer(id); checkDone();
+}
+
+function skipEx(id) {
+  const inst = getInst(id); if (!inst) return;
+  inst.skipped = true; inst.done = false;
+  S.openId = null;
+  renderExes(); renderProg(); renderNextBtn(); checkDone();
+}
+
+function undoEx(id) {
+  const inst = getInst(id); if (!inst) return;
+  inst.done = false; inst.sets.forEach(s=>s.done=false);
+  stopTimer(); renderExes(); renderProg(); renderNextBtn();
+}
+
+function unskipEx(id) {
+  const inst = getInst(id); if (!inst) return;
+  inst.skipped = false;
+  renderExes(); renderProg(); renderNextBtn();
+}
+
+function goToNext() {
+  const next = S.inst.find(i=>!i.done&&!i.skipped);
+  if (!next) { checkDone(); return; }
+  S.openId = iid(next); renderExes();
+  setTimeout(()=>{
+    const el = document.getElementById(`card-${S.openId}`);
+    if (el) el.scrollIntoView({behavior:'smooth',block:'start'});
+  }, 80);
+}
+
+/* --- progress --- */
+function renderProg() {
+  const tot = S.inst.length;
+  const dn = S.inst.filter(i=>i.done||i.skipped).length;
+  const pct = tot ? Math.round(dn/tot*100) : 0;
+  document.getElementById('prog-fill').style.width = pct+'%';
+  document.getElementById('prog-text').textContent = `${dn} of ${tot} exercises done`;
+  document.getElementById('prog-pct').textContent = pct+'%';
+}
+
+function renderNextBtn() {
+  const btn = document.getElementById('next-btn');
+  const allDone = S.inst.every(i=>i.done||i.skipped);
+  if (allDone && S.cooldown) {
+    btn.textContent = '\uD83C\uDFC6 Finish Session';
+    btn.onclick = finishSession;
+  } else if (allDone) {
+    btn.textContent = '\u25b8 Go to Cool-Down';
+    btn.onclick = () => { toggleInfo('cooldown'); document.getElementById('cooldown-card').scrollIntoView({behavior:'smooth'}); };
+  } else {
+    const next = S.inst.find(i=>!i.done&&!i.skipped);
+    if (next) {
+      const ex = EX.find(e=>e.id===next.exId);
+      btn.textContent = `\u25b8 Next: ${ex.name}`;
+    } else {
+      btn.textContent = '\u25b8 Start First Exercise';
+    }
+    btn.onclick = goToNext;
+  }
+}
+
+/* --- rest timer --- */
+function startTimer(id) {
+  stopTimer();
+  const wrap = document.getElementById(`rt-${id}`);
+  const num = document.getElementById(`tn-${id}`);
+  if (!wrap||!num) return;
+  wrap.classList.add('show');
+  let s = 60; num.textContent = s;
+  S.timerIv = setInterval(()=>{
+    s--;
+    if (num) num.textContent = s;
+    if (s <= 0) { stopTimer(); if (wrap) wrap.classList.remove('show'); }
+  }, 1000);
+  S.timerIdActive = id;
+}
+function stopTimer() {
+  if (S.timerIv) { clearInterval(S.timerIv); S.timerIv = null; }
+}
+function skipTimer(id) {
+  stopTimer();
+  const w = document.getElementById(`rt-${id}`);
+  if (w) w.classList.remove('show');
+}
+
+/* --- warmup / cooldown --- */
+function toggleInfo(w) {
+  document.getElementById(`${w}-body`).classList.toggle('open');
+}
+function completeWarmup() {
+  S.warmup = true; updWarmup();
+  document.getElementById('warmup-body').classList.remove('open');
+}
+function completeCooldown() {
+  S.cooldown = true; updCooldown();
+  document.getElementById('cooldown-body').classList.remove('open');
+  renderNextBtn(); checkDone();
+}
+function updWarmup() {
+  document.getElementById('warmup-card').className = `info-card${S.warmup?' done':''}`;
+  document.getElementById('warmup-si').textContent = S.warmup?'\u2705':'\u2610';
+}
+function updCooldown() {
+  document.getElementById('cooldown-card').className = `info-card${S.cooldown?' done':''}`;
+  document.getElementById('cooldown-si').textContent = S.cooldown?'\u2705':'\u2610';
+}
+
+/* --- finish --- */
+function checkDone() {
+  if (S.inst.every(i=>i.done||i.skipped) && S.cooldown) renderNextBtn();
+}
+
+function finishSession() {
+  stopTimer();
+  const mins = Math.round((Date.now()-S.start)/60000);
+  document.getElementById('stat-ex').textContent = S.inst.filter(i=>i.done).length;
+  document.getElementById('stat-sets').textContent = S.inst.reduce((a,i)=>a+i.sets.filter(s=>s.done).length,0);
+  document.getElementById('stat-min').textContent = mins;
+  document.getElementById('done-screen').classList.add('show');
+}
+
+function viewLogDone() { document.getElementById('done-screen').classList.remove('show'); openLog(); }
+function viewHistDone() { document.getElementById('done-screen').classList.remove('show'); openHist(); }
+
+function saveReset() {
+  saveHist();
+  document.getElementById('done-screen').classList.remove('show');
+  S.wk = parseInt(document.getElementById('week-sel').value);
+  init();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function saveHist() {
+  const h = JSON.parse(localStorage.getItem('tg1000_hist')||'[]');
+  h.unshift({
+    date: new Date().toISOString(),
+    wk: S.wk,
+    mins: Math.round((Date.now()-S.start)/60000),
+    warmup: S.warmup,
+    cooldown: S.cooldown,
+    exs: S.inst.map(i => {
+      const ex = EX.find(e=>e.id===i.exId);
+      return { name:ex.name, circuit:i.circuit, done:i.done, skipped:i.skipped,
+        sets:i.sets.map(s=>({reps:s.reps,note:s.note,done:s.done})), note:i.note };
+    })
+  });
+  if (h.length > 60) h.length = 60;
+  localStorage.setItem('tg1000_hist', JSON.stringify(h));
+}
+
+/* --- log panel --- */
+function openLog() {
+  const con = document.getElementById('log-content');
+  const logged = S.inst.filter(i=>i.done||i.skipped);
+  if (!logged.length) {
+    con.innerHTML = '<div class="empty-msg">No exercises logged yet.</div>';
+  } else {
+    const multi = cfg().circuits > 1;
+    con.innerHTML = logged.map(inst=>{
+      const ex = EX.find(e=>e.id===inst.exId);
+      const cl = multi ? ` (Circuit ${inst.circuit})` : '';
+      const setsStr = inst.done
+        ? inst.sets.map((s,i)=>`Set ${i+1}: ${s.reps||'\u2014'} reps${s.note?' \xb7 '+s.note:''}`).join(' | ')
+        : 'Skipped';
+      return `<div class="log-entry">
+        <div class="log-ex-name">${ex.name}${cl} ${inst.skipped?'\u23ed':'\u2705'}</div>
+        <div class="log-sets">${setsStr}</div>
+        ${inst.note?`<div class="log-note">\uD83D\uDCDD ${inst.note}</div>`:''}
+      </div>`;
+    }).join('');
+  }
+  document.getElementById('log-panel').classList.add('show');
+}
+function closeLog() { document.getElementById('log-panel').classList.remove('show'); }
+function closeLogOut(e) { if (e.target===document.getElementById('log-panel')) closeLog(); }
+
+/* --- history panel --- */
+function openHist() {
+  const h = JSON.parse(localStorage.getItem('tg1000_hist')||'[]');
+  const con = document.getElementById('hist-content');
+  if (!h.length) {
+    con.innerHTML = '<div class="empty-msg">No saved sessions yet. Complete a session and tap Save to build your history.</div>';
+  } else {
+    con.innerHTML = h.map((e,i)=>{
+      const d = new Date(e.date);
+      const ds = d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+      const ts = d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+      const we = e.wk===7?8:Number(e.wk)+1;
+      const dn = e.exs.filter(x=>x.done).length;
+      const sk = e.exs.filter(x=>x.skipped).length;
+      const st = e.exs.reduce((a,x)=>a+x.sets.filter(s=>s.done).length,0);
+      return `<div class="hist-session">
+        <div class="hist-date">\uD83D\uDCC5 ${ds} at ${ts}</div>
+        <div class="hist-meta">Week ${e.wk}\u2013${we} \xb7 ${e.mins} mins \xb7 ${dn} exercises \xb7 ${st} sets${sk?` \xb7 ${sk} skipped`:''}</div>
+        <div class="hist-extra">${e.warmup?'\uD83D\uDD25 Warm-up \u2713':'\uD83D\uDD25 No warm-up'} \xa0\xb7\xa0 ${e.cooldown?'\uD83E\uDDD8 Cool-down \u2713':'\uD83E\uDDD8 No cool-down'}</div>
+      </div>`;
+    }).join('');
+  }
+  document.getElementById('hist-panel').classList.add('show');
+}
+function closeHist() { document.getElementById('hist-panel').classList.remove('show'); }
+function closeHistOut(e) { if (e.target===document.getElementById('hist-panel')) closeHist(); }
+
+/* --- week change --- */
+function onWeekChange() {
+  const v = parseInt(document.getElementById('week-sel').value);
+  if (v === S.wk) return;
+  if (!confirm('Changing week will reset your current session. Continue?')) {
+    document.getElementById('week-sel').value = S.wk; return;
+  }
+  S.wk = v; stopTimer(); init();
+}
+
+init();
+</script>
 </body>
 </html>
+
